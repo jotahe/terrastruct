@@ -18,3 +18,39 @@ It exists a separation between files for readability, and there are modules to w
 - You can use workspaces to replicate through isolated environments; as Terraform will create one state file per each. So you'll have testing, staging, integration, production workspaces, and so on, by just using the commands:
 ```terraform workspace new <env>``` and ```terraform workspace select <env>``` ,
 (You will need to create separated .tfvars files, for each environment.)
+
+# Layers
+
+Splitting huge code into smaller pieces is what we do when developing microservices. Then we can use the same approach for infrastructure; one state file per layer and per workspace,  this allows to each team member, make changes to different layers without conflicting with coworkers' modifications to other layers. 
+
+Then we can define possible 3 types of layers:
+
+Bootstrap: used to kickstart your project, set up the backend, the organization, the default roles,  lock down some security parts (enable Cloudtrail for example). Should be cloud provider independent. You can use local tf.state local and backup somewhere.
+
+Foundation: provisions resources like VPC networks and subnets, security policies, even databases. One option is to store everything in a single repo, where each team can have its own state file.
+
+Service: includes everything else regarding your business activity; Instances, clusters, containers, buckets for services, opening ports and load balancers to expose some things.
+
+With two layers that are less frequently applied than the third one, so then they will not be affected by small changes to services, reducing as well as the execution time for each plan.
+
+The service layer can be as well divided in smaller pieces, one of the best strategy  is to use an objected oriented approach (instead of environment oriented approach), but try to not make layer so small, so you would be end managing a lot of layers for a simple implementation, then for sizing a layer correctly, keep in mind these ideas:
+
+The target size of the project
+
+making the layer meaningful
+
+minimizing the dependencies between layers
+
+The number of concurrent collaborators (during the build phase and at runtime)
+
+
+
+# Tools
+
+Use Terraform CLI in the Github Actions Runner as part of the workflow to deploy infrastructure:
+
+hashicorp/setup-terraform: Sets up Terraform CLI in your GitHub Actions workflow.
+
+Use terratest go library, to test deployment of resources
+
+Use cookie-cutter similar to boiler plate the directory structure of new projects.
