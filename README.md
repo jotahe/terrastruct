@@ -54,7 +54,7 @@ By creating separate directories for each environment, you can shrink the blast 
 Directory-separated environments rely on duplicate Terraform code. This may be useful if you want to test changes in a development environment before promoting them to production. However, the directory structure runs the risk of creating drift between the environments over time. If you want to reconfigure a project with a single state file into directory-separated states, you must perform advanced state operations to move the resources.
 
 After reorganizing your environments into directories, your file structure should look like the one below.
-
+'''
 .
 ├── assets
 │   ├── index.html
@@ -68,7 +68,7 @@ After reorganizing your environments into directories, your file structure shoul
    ├── variables.tf
    ├── terraform.tfstate
    └── terraform.tfvars
-
+'''
 # Workspaces
 Workspace-separated environments use the same Terraform code but have different state files, which is useful if you want your environments to stay as similar to each other as possible, for example if you are providing development infrastructure to a team that wants to simulate running in production.
 
@@ -124,7 +124,7 @@ State storage in workspaces
 When you use the default workspace with the local backend, your terraform.tfstate file is stored in the root directory of your Terraform project. When you add additional workspaces your state location changes; Terraform internals manage and store state files in the directory terraform.tfstate.d.
 
 Your directory will look similar to the one below.
-
+'''
 .
 ├── README.md
 ├── assets
@@ -140,7 +140,7 @@ Your directory will look similar to the one below.
 │   │   └── terraform.tfstate
 ├── terraform.tfvars
 └── variables.tf
-
+'''
 
 
 # Tools
