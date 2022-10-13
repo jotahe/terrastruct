@@ -43,7 +43,10 @@ minimizing the dependencies between layers
 
 The number of concurrent collaborators (during the build phase and at runtime)
 
+# Separation
+State separation signals prevents from affecting different environments deployments affect each other. There are two primary methods to separate state between environments: directories and workspaces.
 
+To separate environments with potential configuration differences, use a directory structure. Use workspaces for environments that do not greatly deviate from one another, to avoid duplicating your configurations.
 
 # Tools
 
